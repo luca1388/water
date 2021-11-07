@@ -47,15 +47,17 @@ def update_relay(valve_id):
         return 'malformed request'
 
     if body_state == "on":
-        status_message = 'opening valve' + valve_id
+        status_message = 'opening valve ' + valve_id
+        GPIO.output(str(valve_dictionary[valve_id]['opened_pin']), GPIO.HIGH)
+        GPIO.output(str(valve_dictionary[valve_id]['closed_pin']), GPIO.LOW)
         
     elif body_state == "off":
-        status_message = 'closing valve' + valve_id
+        status_message = 'closing valve'  + valve_id
+        GPIO.output(str(valve_dictionary[valve_id]['opened_pin']), GPIO.LOW)
+        GPIO.output(str(valve_dictionary[valve_id]['closed_pin']), GPIO.HIGH)
 
     print (status_message)
-    print(valve_dictionary[valve_id])
-
-    return status_message + valve_dictionary[valve_id]["opened_pin"]
+    return jsonify(success=True)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
