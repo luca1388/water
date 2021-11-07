@@ -22,9 +22,12 @@ def get_relay(relay_id):
 
 @app.route('/relays/<relay_id>', methods=['PUT'])
 def update_relay(relay_id):
-    body = json.loads(request.data)
-    print body
-    bodyState = body['data']['state']
+    try:
+        body = json.loads(request.data)
+        print body
+        bodyState = body['data']['state']
+    except:
+        return 'malformed request'
 
     return ''+ bodyState
 
