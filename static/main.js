@@ -32,7 +32,7 @@ document
       console.log("B: NOT checked");
       state = 'off';
     }
-    fetch("/valves/a", {
+    fetch("/valves/b", {
         method: "PUT",
         body: JSON.stringify({ data: { state: state } }),
       })
