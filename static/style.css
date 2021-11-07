@@ -2,11 +2,23 @@ h1.title {
     color: rgb(187, 48, 48);
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .zone-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80%;
+    margin: 0 0 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .zone-wrapper .label-title {
