@@ -4,6 +4,13 @@ h1.title {
 
 .zone-wrapper {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.zone-wrapper .switch-wrapper {
+    display: flex;
     justify-content: center;
     align-items: center;
 }
