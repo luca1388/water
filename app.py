@@ -60,4 +60,12 @@ def update_relay(valve_id):
     return jsonify(success=True)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    try:
+        app.run(debug=True, host='0.0.0.0')
+    except KeyboardInterrupt:
+        GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
+    finally:
+        GPIO.cleanup() # this ensures a clean exit  
