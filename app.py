@@ -16,6 +16,17 @@ GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be 
 GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 
+valve_dictionary = {
+    "a": {
+        "opened_pin": VALVE_A_OPENED_PIN,
+        "closed_pin": VALVE_A_CLOSED_PIN,
+    },
+    "b": {
+        "opened_pin": VALVE_B_OPENED_PIN,
+        "closed_pin": VALVE_B_CLOSED_PIN,
+    }
+}
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -37,11 +48,14 @@ def update_relay(valve_id):
 
     if body_state == "on":
         status_message = 'opening valve' + valve_id
+        
     elif body_state == "off":
         status_message = 'closing valve' + valve_id
 
     print (status_message)
-    return status_message
+    print(valve_dictionary[valve_id])
+
+    return status_message + valve_dictionary[valve_id]["opened_pin"]
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
