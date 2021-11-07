@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
@@ -31,7 +31,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Hello world'
+    return render_template('index.html')
 
 @app.route('/valves/<valve_id>', methods=['GET'])
 def get_relay(valve_id):
