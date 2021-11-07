@@ -9,6 +9,11 @@ h1.title {
     align-items: center;
 }
 
+.zone-wrapper .label-title {
+    font-weight: bolder;
+    font-size: 18px;
+}
+
 .zone-wrapper .switch-wrapper {
     display: flex;
     justify-content: center;
@@ -21,6 +26,7 @@ h1.title {
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin: 8px;
   }
   
   /* Hide default HTML checkbox */
