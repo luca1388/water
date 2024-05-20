@@ -104,6 +104,26 @@ def lcd_string(message,line):
   for i in range(LCD_WIDTH):
     lcd_byte(ord(message[i]),LCD_CHR)
 
+# def main():
+#   # Main program block
+
+#   # Initialise display
+#   lcd_init()
+
+#   while True:
+#  # Send some test
+#     #lcd_string("RPiSpy         <",LCD_LINE_1)
+#     #lcd_string("I2C LCD        <",LCD_LINE_2)
+#     lcd_string("Ciao Love!", LCD_LINE_1)
+#     time.sleep(3)
+
+#     # Send some more text
+#     lcd_string("Come stai?", LCD_LINE_2)
+#     #lcd_string(">         RPiSpy",LCD_LINE_1)
+#     #lcd_string(">        I2C LCD",LCD_LINE_2)
+
+#     time.sleep(3)
+
 # if __name__ == '__main__':
 
 #   try:

@@ -27,6 +27,8 @@ valve_dictionary = {
     }
 }
 
+lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -63,7 +65,6 @@ if __name__ == '__main__':
     try:
         app.run(debug=True, host='0.0.0.0')
         lcd.lcd_init()
-        lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
     except KeyboardInterrupt:
         GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
