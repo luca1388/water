@@ -2,8 +2,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 import json
 from flask import Flask, request, jsonify, render_template
-from lcd import lcd_init, lcd_string, LCD_LINE_1, lcd_byte, LCD_CMD
-
+import lcd
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
 
@@ -63,8 +62,8 @@ def update_relay(valve_id):
 if __name__ == '__main__':
     try:
         app.run(debug=True, host='0.0.0.0')
-        lcd_init()
-        lcd_string("Selezionare menu", LCD_LINE_1)
+        lcd.lcd_init()
+        lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
     except KeyboardInterrupt:
         GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
@@ -72,4 +71,4 @@ if __name__ == '__main__':
         GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
     finally:
         GPIO.cleanup() # this ensures a clean exit  
-        lcd_byte(0x01, LCD_CMD)
+        lcd.lcd_byte(0x01, lcd.LCD_CMD)
