@@ -67,9 +67,19 @@ def update_relay(valve_id):
 
 if __name__ == '__main__':
     try:
-        # app.run(debug=True, host='0.0.0.0')
+        app.run(debug=True, host='0.0.0.0')
         while True:
-             print(pot.value)
+            if pot.value < 0.15 and pot.value > 0:
+                 lcd.lcd_string("Up", lcd.LCD_LINE_2)
+            if pot.value < 0.15:
+                 lcd.lcd_string("Left", lcd.LCD_LINE_2)
+            if pot.value < 0.72 and pot.value > 0.5:
+                 lcd.lcd_string("Right", lcd.LCD_LINE_2)
+            if pot.value > 0.5 and pot.value < 1:
+                 lcd.lcd_string("Ok", lcd.LCD_LINE_2)
+            if pot.value > 0.15 and pot.value < 0.33:
+                 lcd.lcd_string("Down", lcd.LCD_LINE_2)
+            
     except KeyboardInterrupt:
         # GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         # GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
