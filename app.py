@@ -70,8 +70,9 @@ if __name__ == '__main__':
         # app.run(debug=True, host='0.0.0.0')
         while True:
             if pot.value < 0.15 and pot.value > 0:
+                 print(pot.value)
                  lcd.lcd_string("Up", lcd.LCD_LINE_1)
-            if pot.value < 0.15:
+            elif pot.value < 0.15:
                  lcd.lcd_string("Left", lcd.LCD_LINE_1)
             if pot.value < 0.72 and pot.value > 0.5:
                  lcd.lcd_string("Right", lcd.LCD_LINE_1)
