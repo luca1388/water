@@ -31,6 +31,7 @@ pot = MCP3008(0)
 # }
 lcd.lcd_init()
 lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
+print(pot.value)
 
 app = Flask(__name__)
 
