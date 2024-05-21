@@ -19,16 +19,16 @@ pot = MCP3008(0)
 # GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 # GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 
-valve_dictionary = {
-    "a": {
-        "opened_pin": VALVE_A_OPENED_PIN,
-        "closed_pin": VALVE_A_CLOSED_PIN,
-    },
-    "b": {
-        "opened_pin": VALVE_B_OPENED_PIN,
-        "closed_pin": VALVE_B_CLOSED_PIN,
-    }
-}
+# valve_dictionary = {
+#     "a": {
+#         "opened_pin": VALVE_A_OPENED_PIN,
+#         "closed_pin": VALVE_A_CLOSED_PIN,
+#     },
+#     "b": {
+#         "opened_pin": VALVE_B_OPENED_PIN,
+#         "closed_pin": VALVE_B_CLOSED_PIN,
+#     }
+# }
 lcd.lcd_init()
 lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
 
@@ -68,10 +68,10 @@ if __name__ == '__main__':
     try:
         app.run(debug=True, host='0.0.0.0')
     except KeyboardInterrupt:
-        GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
-        GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
-        GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
-        GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
+        # GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
+        # GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
+        # GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
+        # GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
     finally:
         GPIO.cleanup() # this ensures a clean exit  
         lcd.lcd_byte(0x01, lcd.LCD_CMD)
