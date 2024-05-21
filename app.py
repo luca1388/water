@@ -67,7 +67,9 @@ def update_relay(valve_id):
 
 if __name__ == '__main__':
     try:
-        app.run(debug=True, host='0.0.0.0')
+        # app.run(debug=True, host='0.0.0.0')
+        while True:
+             print(pot.value)
     except KeyboardInterrupt:
         # GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         # GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
@@ -77,6 +79,4 @@ if __name__ == '__main__':
     finally:
         GPIO.cleanup() # this ensures a clean exit  
         lcd.lcd_byte(0x01, lcd.LCD_CMD)
-
-while True:
-    print(pot.value)
+   
