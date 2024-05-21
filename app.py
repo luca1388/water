@@ -69,16 +69,16 @@ if __name__ == '__main__':
     try:
         # app.run(debug=True, host='0.0.0.0')
         while True:
-            if pot.value < 0.15 and pot.value > 0:
+            if pot.value < 0.15 and pot.value > 0.13:
                  print(pot.value)
                  lcd.lcd_string("Up", lcd.LCD_LINE_1)
-            elif pot.value < 0.15:
+            if pot.value < 0.1:
                  lcd.lcd_string("Left", lcd.LCD_LINE_1)
-            if pot.value < 0.72 and pot.value > 0.5:
+            if pot.value < 0.50 and pot.value > 0.48:
                  lcd.lcd_string("Right", lcd.LCD_LINE_1)
-            if pot.value > 0.5 and pot.value < 1:
+            if pot.value > 0.70 and pot.value < 1:
                  lcd.lcd_string("Ok", lcd.LCD_LINE_1)
-            if pot.value > 0.15 and pot.value < 0.33:
+            if pot.value > 0.31 and pot.value < 0.33:
                  lcd.lcd_string("Down", lcd.LCD_LINE_1)
             
     except KeyboardInterrupt:
