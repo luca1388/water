@@ -76,7 +76,7 @@ if __name__ == '__main__':
                  lcd.lcd_string("Left", lcd.LCD_LINE_1)
             if pot.value < 0.50 and pot.value > 0.48:
                  lcd.lcd_string("Right", lcd.LCD_LINE_1)
-            if pot.value > 0.70 and pot.value < 1:
+            if pot.value > 0.70 and pot.value < 0.73:
                  lcd.lcd_string("Ok", lcd.LCD_LINE_1)
             if pot.value > 0.31 and pot.value < 0.33:
                  lcd.lcd_string("Down", lcd.LCD_LINE_1)
