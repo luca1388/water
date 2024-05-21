@@ -67,7 +67,7 @@ def update_relay(valve_id):
 
 if __name__ == '__main__':
     try:
-        app.run(debug=True, host='0.0.0.0')
+        # app.run(debug=True, host='0.0.0.0')
         while True:
             if pot.value < 0.15 and pot.value > 0:
                  lcd.lcd_string("Up", lcd.LCD_LINE_2)
