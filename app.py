@@ -7,17 +7,17 @@ import lcd
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
 
-VALVE_A_OPENED_PIN = 11
-VALVE_A_CLOSED_PIN = 13
-VALVE_B_OPENED_PIN = 15
-VALVE_B_CLOSED_PIN = 16
+# VALVE_A_OPENED_PIN = 11
+# VALVE_A_CLOSED_PIN = 13
+# VALVE_B_OPENED_PIN = 15
+# VALVE_B_CLOSED_PIN = 16
 
 pot = MCP3008(0)
 
-GPIO.setup(VALVE_A_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
-GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
-GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
-GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+# GPIO.setup(VALVE_A_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
+# GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
+# GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+# GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 
 valve_dictionary = {
     "a": {
