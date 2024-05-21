@@ -71,17 +71,15 @@ if __name__ == '__main__':
         while True:
             if pot.value < 0.15 and pot.value > 0.13:
                  print(pot.value)
-                 lcd.lcd_string("Up", lcd.LCD_LINE_1)
+                 lcd.lcd_string("Up", lcd.LCD_LINE_2)
             if pot.value < 0.1:
-                 lcd.lcd_string("Left", lcd.LCD_LINE_1)
+                 lcd.lcd_string("Left", lcd.LCD_LINE_2)
             if pot.value < 0.50 and pot.value > 0.48:
                  lcd.lcd_string("Right", lcd.LCD_LINE_1)
             if pot.value > 0.70 and pot.value < 0.73:
                  lcd.lcd_string("Ok", lcd.LCD_LINE_1)
             if pot.value > 0.31 and pot.value < 0.33:
                  lcd.lcd_string("Down", lcd.LCD_LINE_1)
-            else:
-                lcd.lcd_string("Press a key", lcd.LCD_LINE_1)
             
     except KeyboardInterrupt:
         # GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
