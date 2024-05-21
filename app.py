@@ -5,7 +5,7 @@ import json
 from flask import Flask, request, jsonify, render_template
 import lcd
 GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
+# GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
 
 # VALVE_A_OPENED_PIN = 11
 # VALVE_A_CLOSED_PIN = 13
