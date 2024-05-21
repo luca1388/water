@@ -72,6 +72,7 @@ if __name__ == '__main__':
         # GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
         # GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
         # GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
+        print('shutting down')
     finally:
         GPIO.cleanup() # this ensures a clean exit  
         lcd.lcd_byte(0x01, lcd.LCD_CMD)
