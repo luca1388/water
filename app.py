@@ -80,6 +80,8 @@ if __name__ == '__main__':
                  lcd.lcd_string("Ok", lcd.LCD_LINE_1)
             if pot.value > 0.31 and pot.value < 0.33:
                  lcd.lcd_string("Down", lcd.LCD_LINE_1)
+            else:
+                lcd.lcd_string("Press a key", lcd.LCD_LINE_1)
             
     except KeyboardInterrupt:
         # GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
