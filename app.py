@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+from gpiozero import MCP3008
 import json
 from flask import Flask, request, jsonify, render_template
 import lcd
@@ -10,6 +11,8 @@ VALVE_A_OPENED_PIN = 11
 VALVE_A_CLOSED_PIN = 13
 VALVE_B_OPENED_PIN = 15
 VALVE_B_CLOSED_PIN = 16
+
+pot = MCP3008(0)
 
 GPIO.setup(VALVE_A_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
 GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
@@ -26,7 +29,7 @@ valve_dictionary = {
         "closed_pin": VALVE_B_CLOSED_PIN,
     }
 }
-
+lcd.lcd_init()
 lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
 
 app = Flask(__name__)
@@ -64,7 +67,6 @@ def update_relay(valve_id):
 if __name__ == '__main__':
     try:
         app.run(debug=True, host='0.0.0.0')
-        lcd.lcd_init()
     except KeyboardInterrupt:
         GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
@@ -73,3 +75,6 @@ if __name__ == '__main__':
     finally:
         GPIO.cleanup() # this ensures a clean exit  
         lcd.lcd_byte(0x01, lcd.LCD_CMD)
+
+while True:
+    print(pot.value)
