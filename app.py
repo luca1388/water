@@ -1,3 +1,4 @@
+import sys
 import RPi.GPIO as GPIO
 from time import sleep
 from gpiozero import MCP3008
@@ -72,7 +73,6 @@ def run_app():
 def input_listener():
     while True:
         if pot.value < 0.15 and pot.value > 0.13:
-            print(pot.value)
             lcd.lcd_string("Up", lcd.LCD_LINE_2)
         if pot.value < 0.1:
             lcd.lcd_string("Left", lcd.LCD_LINE_2)
@@ -96,6 +96,7 @@ if __name__ == '__main__':
         GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
         print('shutting down')
+        sys.exit()
     finally:
         GPIO.cleanup() # this ensures a clean exit  
         lcd.lcd_byte(0x01, lcd.LCD_CMD)
