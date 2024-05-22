@@ -4,31 +4,32 @@ from gpiozero import MCP3008
 import json
 from flask import Flask, request, jsonify, render_template
 import lcd
+import threading
 GPIO.setwarnings(False)
-# GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
+GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
 
-# VALVE_A_OPENED_PIN = 11
-# VALVE_A_CLOSED_PIN = 13
-# VALVE_B_OPENED_PIN = 15
-# VALVE_B_CLOSED_PIN = 16
+VALVE_A_OPENED_PIN = 11
+VALVE_A_CLOSED_PIN = 13
+VALVE_B_OPENED_PIN = 15
+VALVE_B_CLOSED_PIN = 16
 
 pot = MCP3008(0)
 
-# GPIO.setup(VALVE_A_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
-# GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
-# GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
-# GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_A_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 
-# valve_dictionary = {
-#     "a": {
-#         "opened_pin": VALVE_A_OPENED_PIN,
-#         "closed_pin": VALVE_A_CLOSED_PIN,
-#     },
-#     "b": {
-#         "opened_pin": VALVE_B_OPENED_PIN,
-#         "closed_pin": VALVE_B_CLOSED_PIN,
-#     }
-# }
+valve_dictionary = {
+    "a": {
+        "opened_pin": VALVE_A_OPENED_PIN,
+        "closed_pin": VALVE_A_CLOSED_PIN,
+    },
+    "b": {
+        "opened_pin": VALVE_B_OPENED_PIN,
+        "closed_pin": VALVE_B_CLOSED_PIN,
+    }
+}
 lcd.lcd_init()
 lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
 print(pot.value)
@@ -65,27 +66,35 @@ def update_relay(valve_id):
     print (status_message)
     return jsonify(success=True)
 
+def run_app():
+    app.run(debug=True, host='0.0.0.0')
+
+def input_listener():
+    while True:
+        if pot.value < 0.15 and pot.value > 0.13:
+            print(pot.value)
+            lcd.lcd_string("Up", lcd.LCD_LINE_2)
+        if pot.value < 0.1:
+            lcd.lcd_string("Left", lcd.LCD_LINE_2)
+        if pot.value < 0.50 and pot.value > 0.48:
+            lcd.lcd_string("Right", lcd.LCD_LINE_2)
+        if pot.value > 0.70 and pot.value < 0.73:
+            lcd.lcd_string("Ok", lcd.LCD_LINE_2)
+        if pot.value > 0.31 and pot.value < 0.33:
+            lcd.lcd_string("Down", lcd.LCD_LINE_2)
+
 if __name__ == '__main__':
     try:
-        # app.run(debug=True, host='0.0.0.0')
-        while True:
-            if pot.value < 0.15 and pot.value > 0.13:
-                 print(pot.value)
-                 lcd.lcd_string("Up", lcd.LCD_LINE_2)
-            if pot.value < 0.1:
-                 lcd.lcd_string("Left", lcd.LCD_LINE_2)
-            if pot.value < 0.50 and pot.value > 0.48:
-                 lcd.lcd_string("Right", lcd.LCD_LINE_2)
-            if pot.value > 0.70 and pot.value < 0.73:
-                 lcd.lcd_string("Ok", lcd.LCD_LINE_2)
-            if pot.value > 0.31 and pot.value < 0.33:
-                 lcd.lcd_string("Down", lcd.LCD_LINE_2)
-            
+        server_thread = threading.Thread(target=run_app)
+        input_tread = threading.Thread(target=input_listener)
+
+        server_thread.start()
+        input_tread.start()    
     except KeyboardInterrupt:
-        # GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
-        # GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
-        # GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
-        # GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
         print('shutting down')
     finally:
         GPIO.cleanup() # this ensures a clean exit  
