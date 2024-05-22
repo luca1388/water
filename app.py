@@ -67,7 +67,7 @@ def update_relay(valve_id):
     return jsonify(success=True)
 
 def run_app():
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
 
 def input_listener():
     while True:
