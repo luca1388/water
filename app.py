@@ -83,20 +83,23 @@ def input_listener():
 if __name__ == '__main__':
     try:
         lcd.lcd_init()
+        sleep(1)
         lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
 
         server_thread = threading.Thread(target=run_app)
         input_tread = threading.Thread(target=input_listener)
 
         server_thread.start()
-        input_tread.start()    
+        input_tread.start()
+
+        server_thread.join()
+        input_tread.join() 
     except KeyboardInterrupt:
         GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
         GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
         print('shutting down')
-        sys.exit()
     finally:
         GPIO.cleanup() # this ensures a clean exit  
         lcd.lcd_byte(0x01, lcd.LCD_CMD)
