@@ -68,8 +68,6 @@ def run_app():
     app.run(debug=False, host='0.0.0.0')
 
 def input_listener():
-    lcd.lcd_init()
-    lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
     while True:
         if pot.value < 0.15 and pot.value > 0.13:
             lcd.lcd_string("Up", lcd.LCD_LINE_2)
@@ -84,6 +82,9 @@ def input_listener():
 
 if __name__ == '__main__':
     try:
+        lcd.lcd_init()
+        lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
+
         server_thread = threading.Thread(target=run_app)
         input_tread = threading.Thread(target=input_listener)
 
