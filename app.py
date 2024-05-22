@@ -31,9 +31,6 @@ valve_dictionary = {
         "closed_pin": VALVE_B_CLOSED_PIN,
     }
 }
-lcd.lcd_init()
-lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
-print(pot.value)
 
 app = Flask(__name__)
 
@@ -71,6 +68,8 @@ def run_app():
     app.run(debug=False, host='0.0.0.0')
 
 def input_listener():
+    lcd.lcd_init()
+    lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
     while True:
         if pot.value < 0.15 and pot.value > 0.13:
             lcd.lcd_string("Up", lcd.LCD_LINE_2)
