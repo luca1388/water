@@ -86,14 +86,16 @@ if __name__ == '__main__':
         sleep(1)
         lcd.lcd_string("Selezionare menu", lcd.LCD_LINE_1)
 
-        server_thread = threading.Thread(target=run_app)
-        input_tread = threading.Thread(target=input_listener)
+        run_app()
 
-        server_thread.start()
-        input_tread.start()
+        # server_thread = threading.Thread(target=run_app)
+        # input_tread = threading.Thread(target=input_listener)
 
-        server_thread.join()
-        input_tread.join() 
+        # server_thread.start()
+        # input_tread.start()
+
+        # server_thread.join()
+        # input_tread.join() 
     except KeyboardInterrupt:
         GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
         GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
