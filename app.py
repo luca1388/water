@@ -9,26 +9,38 @@ import threading
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
 
-VALVE_A_OPENED_PIN = 11
-VALVE_A_CLOSED_PIN = 13
-VALVE_B_OPENED_PIN = 15
-VALVE_B_CLOSED_PIN = 16
+VALVE_1_TRIGGER_PIN = 11
+VALVE_2_TRIGGER_PIN = 13
+VALVE_3_TRIGGER_PIN = 15
+VALVE_4_TRIGGER_PIN = 16
+
+IN_1_H_BRIDGE = 31
+IN_2_H_BRIDGE = 29
+
+# IN_1_H_BRIDGE = L, IN_2_H_BRIDGE = H --> clockwise
+# IN_1_H_BRIDGE = H, IN_2_H_BRIDGE = L --> counterclockwise
 
 pot = MCP3008(0)
 
-GPIO.setup(VALVE_A_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
-GPIO.setup(VALVE_A_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
-GPIO.setup(VALVE_B_OPENED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
-GPIO.setup(VALVE_B_CLOSED_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_1_TRIGGER_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 11 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_2_TRIGGER_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 13 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_3_TRIGGER_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+GPIO.setup(VALVE_4_TRIGGER_PIN, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+GPIO.setup(IN_1_H_BRIDGE, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
+GPIO.setup(IN_2_H_BRIDGE, GPIO.OUT, initial=GPIO.LOW)   # Set pin 15 to be an output pin and set initial value to low (off)
 
 valve_dictionary = {
     "a": {
-        "opened_pin": VALVE_A_OPENED_PIN,
-        "closed_pin": VALVE_A_CLOSED_PIN,
+        "pin": VALVE_1_TRIGGER_PIN,
     },
     "b": {
-        "opened_pin": VALVE_B_OPENED_PIN,
-        "closed_pin": VALVE_B_CLOSED_PIN,
+        "pin": VALVE_2_TRIGGER_PIN,
+    },
+     "c": {
+        "pin": VALVE_3_TRIGGER_PIN,
+    },
+    "d": {
+        "pin": VALVE_4_TRIGGER_PIN,
     }
 }
 
@@ -53,13 +65,28 @@ def update_relay(valve_id):
 
     if body_state == "on":
         status_message = 'opening valve ' + valve_id
-        GPIO.output(valve_dictionary[valve_id]['opened_pin'], GPIO.HIGH)
-        GPIO.output(valve_dictionary[valve_id]['closed_pin'], GPIO.LOW)
+        # Set voltage polarity (positive)
+        GPIO.output(IN_1_H_BRIDGE, GPIO.LOW)
+        GPIO.output(IN_2_H_BRIDGE, GPIO.HIGH)
+
+        GPIO.output(valve_dictionary[valve_id]['pin'], GPIO.HIGH)
+        sleep(2)
+        GPIO.output(valve_dictionary[valve_id]['pin'], GPIO.LOW)
+
+        # GPIO.output(valve_dictionary[valve_id]['opened_pin'], GPIO.HIGH)
+        # GPIO.output(valve_dictionary[valve_id]['closed_pin'], GPIO.LOW)
         
     elif body_state == "off":
         status_message = 'closing valve'  + valve_id
-        GPIO.output(valve_dictionary[valve_id]['opened_pin'], GPIO.LOW)
-        GPIO.output(valve_dictionary[valve_id]['closed_pin'], GPIO.HIGH)
+         # Set voltage polarity (negative)
+        GPIO.output(IN_1_H_BRIDGE, GPIO.HIGH)
+        GPIO.output(IN_2_H_BRIDGE, GPIO.LOW)
+        
+        GPIO.output(valve_dictionary[valve_id]['pin'], GPIO.HIGH)
+        sleep(2)
+        GPIO.output(valve_dictionary[valve_id]['pin'], GPIO.LOW)
+        # GPIO.output(valve_dictionary[valve_id]['opened_pin'], GPIO.LOW)
+        # GPIO.output(valve_dictionary[valve_id]['closed_pin'], GPIO.HIGH)
 
     print (status_message)
     return jsonify(success=True)
