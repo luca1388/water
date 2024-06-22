@@ -65,6 +65,7 @@ def update_relay(valve_id):
 
     if body_state == "on":
         status_message = 'opening valve ' + valve_id
+        lcd.lcd_string("Zona attiva", lcd.LCD_LINE_1)
         # Set voltage polarity (positive)
         GPIO.output(IN_1_H_BRIDGE, GPIO.LOW)
         GPIO.output(IN_2_H_BRIDGE, GPIO.HIGH)
@@ -78,6 +79,7 @@ def update_relay(valve_id):
         
     elif body_state == "off":
         status_message = 'closing valve'  + valve_id
+        lcd.lcd_string("Zona disattiva", lcd.LCD_LINE_1)
          # Set voltage polarity (negative)
         GPIO.output(IN_1_H_BRIDGE, GPIO.HIGH)
         GPIO.output(IN_2_H_BRIDGE, GPIO.LOW)
@@ -124,10 +126,10 @@ if __name__ == '__main__':
         # server_thread.join()
         # input_tread.join() 
     except KeyboardInterrupt:
-        GPIO.output(VALVE_A_OPENED_PIN, GPIO.LOW)
-        GPIO.output(VALVE_A_CLOSED_PIN, GPIO.LOW)
-        GPIO.output(VALVE_B_OPENED_PIN, GPIO.LOW)
-        GPIO.output(VALVE_B_CLOSED_PIN, GPIO.LOW)
+        GPIO.output(VALVE_1_TRIGGER_PIN, GPIO.LOW)
+        GPIO.output(VALVE_2_TRIGGER_PIN, GPIO.LOW)
+        GPIO.output(VALVE_3_TRIGGER_PIN, GPIO.LOW)
+        GPIO.output(VALVE_4_TRIGGER_PIN, GPIO.LOW)
         print('shutting down')
     finally:
         GPIO.cleanup() # this ensures a clean exit  
